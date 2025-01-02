@@ -1,4 +1,7 @@
 #!/usr/bin/env pybricks-micropython
+# Shebang line on top to choose correct interpreter 
+
+# Import pybricks functions
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
@@ -11,38 +14,32 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
 # Click "Open user guide" on the EV3 extension tab for more information.
 
-
-# Create your objects here.
-ev3 = EV3Brick()
-
-
-# Write your program here.
-ev3.speaker.beep()
-
-#!/usr/bin/env pybricks-micropython
-from pybricks.hubs import EV3Brick
-from pybricks.ev3devices import Motor
-from pybricks.parameters import Port
-
-# Create your objects here
-
 # Initialize the EV3 Brick.
 ev3 = EV3Brick()
 
-# Initialize a motor at port B.
-test_motor = Motor(Port.B)
+# Initialize a motors
+base_module_motor = Motor(Port.A)
+second_module_motor = Motor(Port.B)
 
 # Write your program here
 
 # Play a sound.
 ev3.speaker.beep()
 
-# Run the motor up to 500 degrees per second. To a target angle of 360 degrees.
+# First parameter: speed (Degrees per second), second parameter: target angle
+# Base module
 for i in range(10):
-    test_motor.run_target(500, 3600)
+    base_module_motor.run_target(500, 3600)
 
 for i in range(10):
-    test_motor.run_target(500, -3600)
+    base_module_motor.run_target(500, -3600)
+
+# Second module
+for i in range(10):
+    second_module_motor.run_target(500, 3600)
+
+for i in range(10):
+    second_module_motor.run_target(500, -3600)
 
 # Play another beep sound.
 ev3.speaker.beep(frequency=1000, duration=500)
