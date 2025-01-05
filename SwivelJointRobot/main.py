@@ -22,7 +22,7 @@ base_module_motor = Motor(Port.A)
 second_module_motor = Motor(Port.B)
 
 # Initialize remote control
-receiver = InfraredSensor(Port.S1)
+receiver = InfraredSensor(Port.S2)
 
 # Write your program here
 
@@ -44,38 +44,38 @@ ev3.speaker.beep()
 #for i in range(10):
     #second_module_motor.run_target(500, -3600)
 
+# Initialize target positions
+base_position = 0
+second_position = 0
+
 # Loop
 while True:
     # Check for input
-    print(receiver.keypad()) 
-    pressed_buttons = []
-    for value in receiver.keypad():
-        pressed_buttons.append(value)
+    pressed_buttons = receiver.keypad()
 
     # Left-Up pressed
     if Button.LEFT_UP in pressed_buttons and not Button.LEFT_DOWN in pressed_buttons:
-        # Base module motor right
-        base_module_motor.run_target(500, 100)
+        base_position += 200  # Increment target position
+        base_module_motor.run_target(500, base_position)
         print("l-up")
 
     # Left-Down pressed
     if Button.LEFT_DOWN in pressed_buttons and not Button.LEFT_UP in pressed_buttons:
-        # Base module motor left
-        base_module_motor.run_target(500, -100)
+        base_position -= 200  # Decrement target position
+        base_module_motor.run_target(500, base_position)
         print("l-down")
 
     # Right-Up pressed
     if Button.RIGHT_UP in pressed_buttons and not Button.RIGHT_DOWN in pressed_buttons:
-        # Second module motor right
-        second_module_motor.run_target(500, 100)
+        second_position += 200  # Increment target position
+        second_module_motor.run_target(500, second_position)
         print("r-up")
 
     # Right-Down pressed
     if Button.RIGHT_DOWN in pressed_buttons and not Button.RIGHT_UP in pressed_buttons:
-        # Second module motor left
-        second_module_motor.run_target(500, -100)
+        second_position -= 200 # Decrement target position
+        second_module_motor.run_target(500, second_position)
         print("r-down")
-
 
 #print(pressed_buttons)
 #print(receiver.keypad())
