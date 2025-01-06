@@ -29,21 +29,6 @@ receiver = InfraredSensor(Port.S2)
 # Play a sound.
 ev3.speaker.beep()
 
-# First parameter: speed (Degrees per second), second parameter: target angle
-# Base module
-#for i in range(10):
-    #base_module_motor.run_target(500, 3600)
-
-#for i in range(10):
-    #base_module_motor.run_target(500, -3600)
-
-# Second module
-#for i in range(10):
-    #second_module_motor.run_target(500, 3600)
-
-#for i in range(10):
-    #second_module_motor.run_target(500, -3600)
-
 # Initialize target positions
 base_position = 0
 second_position = 0
@@ -53,32 +38,23 @@ while True:
     # Check for input
     pressed_buttons = receiver.keypad()
 
-    # Left-Up pressed
-    if Button.LEFT_UP in pressed_buttons and not Button.LEFT_DOWN in pressed_buttons:
-        base_position += 200  # Increment target position
-        base_module_motor.run_target(500, base_position)
-        print("l-up")
+    # Base module: Move right (Left-Up pressed)
+    if Button.LEFT_UP in pressed_buttons and Button.LEFT_DOWN not in pressed_buttons:
+        base_module_motor.run(500)  # Run motor at 500 degrees per second
+    # Base module: Move left (Left-Down pressed)
+    elif Button.LEFT_DOWN in pressed_buttons and Button.LEFT_UP not in pressed_buttons:
+        base_module_motor.run(-500)  # Run motor at -500 degrees per second
+    else:
+        base_module_motor.stop()  # Stop the motor when no button is pressed
 
-    # Left-Down pressed
-    if Button.LEFT_DOWN in pressed_buttons and not Button.LEFT_UP in pressed_buttons:
-        base_position -= 200  # Decrement target position
-        base_module_motor.run_target(500, base_position)
-        print("l-down")
-
-    # Right-Up pressed
-    if Button.RIGHT_UP in pressed_buttons and not Button.RIGHT_DOWN in pressed_buttons:
-        second_position += 200  # Increment target position
-        second_module_motor.run_target(500, second_position)
-        print("r-up")
-
-    # Right-Down pressed
-    if Button.RIGHT_DOWN in pressed_buttons and not Button.RIGHT_UP in pressed_buttons:
-        second_position -= 200 # Decrement target position
-        second_module_motor.run_target(500, second_position)
-        print("r-down")
-
-#print(pressed_buttons)
-#print(receiver.keypad())
+    # Second module: Move right (Right-Up pressed)
+    if Button.RIGHT_UP in pressed_buttons and Button.RIGHT_DOWN not in pressed_buttons:
+        second_module_motor.run(500)  # Run motor at 500 degrees per second
+    # Second module: Move left (Right-Down pressed)
+    elif Button.RIGHT_DOWN in pressed_buttons and Button.RIGHT_UP not in pressed_buttons:
+        second_module_motor.run(-500)  # Run motor at -500 degrees per second
+    else:
+        second_module_motor.stop()  # Stop the motor when no button is pressed
 
 # Play another beep sound.
 ev3.speaker.beep(frequency=1000, duration=500)
