@@ -33,6 +33,10 @@ ev3.speaker.beep()
 base_position = 0
 second_position = 0
 
+# Return to base position
+base_module_motor.run_target(500, base_position)
+second_module_motor.run_target(500, second_position)
+
 # Loop
 while True:
     # Check for input
