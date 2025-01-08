@@ -24,12 +24,6 @@ second_module_motor = Motor(Port.B)
 # Initialize remote control
 receiver = InfraredSensor(Port.S2)
 
-# Initialize rotation counting
-basemodule_angle = []
-basemodule_rotations = 0
-
-secondmodule_angle = []
-secondmodule_rotations = 0
 
 # Write your program here
 
@@ -44,11 +38,17 @@ second_position = 0
 base_module_motor.run_target(500, base_position)
 second_module_motor.run_target(500, second_position)
 
+# Reset motor angles
+base_module_motor.reset_angle()
+second_module_motor.reset_angle()
+
+
 # Loop
 while True:
-    # Check angle
-    CountRotations()
-
+    # Print angles
+    print(base_module_motor.angle)
+    print(second_module_motor.angle)
+    
     # Check for input
     pressed_buttons = receiver.keypad()
 
@@ -72,25 +72,3 @@ while True:
 
 # Play another beep sound.
 ev3.speaker.beep(frequency=1000, duration=500)
-
-
-def CountRotations():
-    # Update motor angles
-    basemodule_angle.append(base_module_motor.angle)
-    secondmodule_angle.append(second_module_motor.angle)
-
-    # Check for full right rotation
-    if basemodule_angle[-2] > 270 and basemodule_angle[-1] < 90:
-        basemodule_rotations += 1
-
-    # Check for full left rotation
-    if basemodule_angle[-2] < 90 and basemodule_angle[-1] > 270:
-        basemodule_rotations -= 1
-
-    print(basemodule_angle)
-    print(basemodule_rotations)
-
-    ...
-
-
-
