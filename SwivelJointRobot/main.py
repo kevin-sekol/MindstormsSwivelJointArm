@@ -39,15 +39,15 @@ base_module_motor.run_target(500, base_position)
 second_module_motor.run_target(500, second_position)
 
 # Reset motor angles
-base_module_motor.reset_angle()
-second_module_motor.reset_angle()
+base_module_motor.reset_angle(0)
+second_module_motor.reset_angle(0)
 
 
 # Loop
 while True:
     # Print angles
-    print(base_module_motor.angle)
-    print(second_module_motor.angle)
+    print(base_module_motor.angle())
+    print(second_module_motor.angle())
     
     # Check for input
     pressed_buttons = receiver.keypad()
