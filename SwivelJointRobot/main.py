@@ -14,6 +14,9 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
 # Click "Open user guide" on the EV3 extension tab for more information.
 
+# Placeholder function definitons:
+def returnToBase(): pass
+
 # Initialize the EV3 Brick.
 ev3 = EV3Brick()
 
@@ -37,6 +40,7 @@ second_position = 0
 # Return to base position
 base_module_motor.run_target(500, base_position)
 second_module_motor.run_target(500, second_position)
+returnToBase()
 
 # Reset motor angles
 base_module_motor.reset_angle(0)
@@ -53,22 +57,31 @@ while True:
     pressed_buttons = receiver.keypad()
 
     # Base module: Move right (Left-Up pressed)
-    if Button.LEFT_UP in pressed_buttons and Button.LEFT_DOWN not in pressed_buttons:
+    if Button.LEFT_UP in pressed_buttons and Button.LEFT_DOWN not in pressed_buttons and not Button.BEACON in receiver.buttons():
         base_module_motor.run(500)  # Run motor at 500 degrees per second
     # Base module: Move left (Left-Down pressed)
-    elif Button.LEFT_DOWN in pressed_buttons and Button.LEFT_UP not in pressed_buttons:
+    elif Button.LEFT_DOWN in pressed_buttons and Button.LEFT_UP not in pressed_buttons and not Button.BEACON in receiver.buttons():
         base_module_motor.run(-500)  # Run motor at -500 degrees per second
     else:
         base_module_motor.stop()  # Stop the motor when no button is pressed
 
     # Second module: Move right (Right-Up pressed)
-    if Button.RIGHT_UP in pressed_buttons and Button.RIGHT_DOWN not in pressed_buttons:
+    if Button.RIGHT_UP in pressed_buttons and Button.RIGHT_DOWN not in pressed_buttons and not Button.BEACON in receiver.buttons():
         second_module_motor.run(500)  # Run motor at 500 degrees per second
     # Second module: Move left (Right-Down pressed)
-    elif Button.RIGHT_DOWN in pressed_buttons and Button.RIGHT_UP not in pressed_buttons:
+    elif Button.RIGHT_DOWN in pressed_buttons and Button.RIGHT_UP not in pressed_buttons and not Button.BEACON in receiver.buttons():
         second_module_motor.run(-500)  # Run motor at -500 degrees per second
     else:
         second_module_motor.stop()  # Stop the motor when no button is pressed
 
+    # Return to base position
+    if Button.BEACON in receiver.buttons():
+        returnToBase
+
 # Play another beep sound.
 ev3.speaker.beep(frequency=1000, duration=500)
+
+
+def returnToBase():
+    base_module_motor.run_angle(500, base_module_motor.angle() * -1)
+    second_module_motor.run_angle(500, second_module_motor.angle() * -1)
