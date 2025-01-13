@@ -15,6 +15,9 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 # Click "Open user guide" on the EV3 extension tab for more information.
 
 import time
+import sys
+
+import diagnosis
 
 # Placeholder function definitons:
 def returnToBase():
@@ -54,14 +57,13 @@ returnToBase()
 base_module_motor.reset_angle(0)
 second_module_motor.reset_angle(0)
 
+# Diagnosis (mode)
+if len(sys.argv) > 1:
+    diagnosis_mode = int(sys.argv[1])
+    diagnosis.diagnosis(diagnosis_mode)
+
 # Loop
 while True:
-    start = time.time()
-    pressed_buttons = receiver.keypad()
-    elapsed = time.time() - start
-    print(f"Keypad read time: {elapsed:.3f} seconds")
-    wait(10)
-
     # Check for input
     pressed_buttons = receiver.keypad()
     if Button.BEACON in receiver.buttons(1): pressed_buttons.append(Button.BEACON)
