@@ -1,3 +1,6 @@
+#!/usr/bin/env pybricks-micropython
+# Shebang line on top to choose correct interpreter 
+
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
@@ -20,7 +23,7 @@ def diagnosis(mode):
         start = time.time()
         pressed_buttons = receiver.keypad()
         elapsed = time.time() - start
-        print(f"Keypad read time: {elapsed:.3f} seconds")
+        print("Keypad read time: {:.3f} seconds".format(elapsed))
         wait(10)
 
     # Test infrared channel
@@ -28,4 +31,4 @@ def diagnosis(mode):
         print("Starting IR channel test (mode 2).")
         
     while mode == 2:
-        print(f"IR Channel: {receiver.channel}")
+        print("IR Channel: {}".format(receiver.channel))

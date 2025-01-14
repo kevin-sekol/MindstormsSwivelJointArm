@@ -29,6 +29,7 @@ def returnToBase():
 
 # Initialize the EV3 Brick.
 ev3 = EV3Brick()
+MODE = 1
 
 # Initialize a motors
 base_module_motor = Motor(Port.A)
@@ -58,6 +59,9 @@ base_module_motor.reset_angle(0)
 second_module_motor.reset_angle(0)
 
 # Diagnosis (mode)
+if MODE >= 1:
+    diagnosis.diagnosis(MODE)
+
 if len(sys.argv) > 1:
     diagnosis_mode = int(sys.argv[1])
     diagnosis.diagnosis(diagnosis_mode)
