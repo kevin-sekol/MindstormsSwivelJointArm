@@ -28,7 +28,4 @@ def diagnosis(mode):
 
     # Test infrared channel
     if mode == 2:
-        print("Starting IR channel test (mode 2).")
-        
-    while mode == 2:
-        print("IR Channel: {}".format(receiver.channel))
+        pass
