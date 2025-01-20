@@ -26,6 +26,4 @@ def diagnosis(mode):
         print("Keypad read time: {:.3f} seconds".format(elapsed))
         wait(10)
 
-    # Test infrared channel
-    if mode == 2:
-        pass
+    
