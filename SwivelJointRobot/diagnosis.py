@@ -19,7 +19,7 @@ def diagnosis(mode):
     if mode == 1:
         print("Starting keypad response test (mode 1).")
 
-    while mode == 1:
+        while mode == 1:
         start = time.time()
         pressed_buttons = receiver.keypad()
         elapsed = time.time() - start
